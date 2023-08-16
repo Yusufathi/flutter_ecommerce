@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: AuthenticationScreen.id,
       routes: {
-        AuthenticationScreen.id :(_)=>HomeScreen(),
+        AuthenticationScreen.id :(_)=>AuthenticationScreen(),
         CartScreen.id :(_)=>CartScreen(),
         ItemScreen.id :(_)=>ItemScreen(),
         HomeScreen.id :(_)=>HomeScreen(),

@@ -1,3 +1,4 @@
+import 'package:eccomernce/view/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class AuthenticationScreen extends StatefulWidget {
@@ -87,7 +88,10 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
             SizedBox(
               height: 20,
             ),
-            ElevatedButton(onPressed: () {}, child: const Text('Login'))
+            ElevatedButton(onPressed: () {
+              Navigator.of(context).pushNamed(HomeScreen.id);
+
+            }, child: const Text('Login'))
           ],
         ),
       ),
