@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ItemScreen extends StatelessWidget {
   const ItemScreen({super.key});
-
+  static const String id = "item_screen";
 
   @override
   Widget build(BuildContext context) {

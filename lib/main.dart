@@ -1,5 +1,7 @@
 import 'package:eccomernce/view/auth_screen.dart';
+import 'package:eccomernce/view/cart_screen.dart';
 import 'package:eccomernce/view/home_screen.dart';
+import 'package:eccomernce/view/item_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +19,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const AuthenticationScreen(),
+      initialRoute: AuthenticationScreen.id,
+      routes: {
+        AuthenticationScreen.id :(_)=>HomeScreen(),
+        CartScreen.id :(_)=>CartScreen(),
+        ItemScreen.id :(_)=>ItemScreen(),
+        HomeScreen.id :(_)=>HomeScreen(),
+      },
     );
   }
 }

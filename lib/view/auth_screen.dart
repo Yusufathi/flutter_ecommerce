@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AuthenticationScreen extends StatefulWidget {
+  static const String id = "authentication_screen";
   const AuthenticationScreen({super.key});
 
   @override
@@ -27,63 +28,65 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                 style: TextStyle(
                   color: Colors.deepPurple,
                   fontSize: 35,
-
                 ),
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             const TextField(
               decoration: InputDecoration(
                 hintText: "Email",
                 border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.red,
-                  )
-                ),
+                    borderSide: BorderSide(
+                  color: Colors.red,
+                )),
                 focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.red,
-                    )
-                ),
+                  color: Colors.red,
+                )),
                 enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.red,
-                    )
-                ),
-
+                  color: Colors.red,
+                )),
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             const TextField(
               obscureText: true,
               decoration: InputDecoration(
                 hintText: "Password",
                 border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.red,
-                    )
-                ),
+                  color: Colors.red,
+                )),
                 focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.red,
-                    )
-                ),
+                  color: Colors.red,
+                )),
                 enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.red,
-                    )
-                ),
-
+                  color: Colors.red,
+                )),
               ),
             ),
-            SizedBox(height: 20,),
-            const Row(
+            SizedBox(
+              height: 20,
+            ),
+            Row(
               children: [
-                 Text('Don\'t Have an account? '),
-                 Text('Register Now!',style: TextStyle(color: Colors.blue),),
+                Text('Don\'t Have an account? '),
+                Text(
+                  'Register Now!',
+                  style: TextStyle(color: Colors.blue),
+                ),
               ],
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             ElevatedButton(onPressed: () {}, child: const Text('Login'))
           ],
         ),
