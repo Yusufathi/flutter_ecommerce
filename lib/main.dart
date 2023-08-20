@@ -19,15 +19,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: AuthenticationScreen.id,
+      initialRoute: HomeScreen.id,
       routes: {
-        AuthenticationScreen.id :(_)=>AuthenticationScreen(),
-        CartScreen.id :(_)=>CartScreen(),
-        ItemScreen.id :(_)=>ItemScreen(),
-        HomeScreen.id :(_)=>HomeScreen(),
+        AuthenticationScreen.id: (_) => AuthenticationScreen(),
+        CartScreen.id: (_) => CartScreen(),
+        ItemScreen.id: (_) => ItemScreen(),
+        HomeScreen.id: (_) => HomeScreen(),
       },
     );
   }
 }
-
-

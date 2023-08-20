@@ -10,13 +10,14 @@ class ItemScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ItemModel item = ItemModel(
-      name: "IdeaPad",
+      title: "IdeaPad",
+      id: 5,
+      category: "electronics",
       briefDescription: "Crazy Laptop. Good stuff.",
       fullDescription:
           "Crazy Laptop. Good stuff. Crazy Laptop. Good stuff. Crazy Laptop. Good stuff. Crazy Laptop. Good stuff.Crazy Laptop. Good stuff. Crazy Laptop. Good stuff. Crazy Laptop. Good stuff. Crazy Laptop. Good stuff.Crazy Laptop. Good stuff. Crazy Laptop. Good stuff. Crazy Laptop. Good stuff. Crazy Laptop. Good stuff.",
       price: 20.99,
       imgPath: "images/lenovo.jpg",
-      stockCount: 23,
     );
     return Scaffold(
       appBar: AppBar(
@@ -30,17 +31,17 @@ class ItemScreen extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset(item.imgPath),
+                    Image.asset(item.imgPath!),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          item.name,
+                          item.title!,
                           style: TextStyle(fontSize: 32),
                         ),
                         Text(
@@ -49,19 +50,25 @@ class ItemScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10,),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Text(
-                      item.briefDescription,
+                      item.briefDescription!,
                       style: TextStyle(fontSize: 20),
                     ),
-                    SizedBox(height: 10,),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Text(
-                      item.fullDescription,
+                      item.fullDescription!,
                       style: TextStyle(fontSize: 16),
                     ),
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
