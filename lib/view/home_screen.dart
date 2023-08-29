@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:eccomernce/model/item_model.dart';
+import 'package:eccomernce/services/http_app_request.dart';
 import 'package:eccomernce/view/item_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -18,10 +19,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool _isLoading = true;
   List<dynamic> _categories = [];
-  List<ItemModel> _electornicsCategory = [];
-  List<ItemModel> _jeweleryCategory = [];
-  List<ItemModel> _mensCategory = [];
-  List<ItemModel> _womensCategory = [];
+
 
   List<ItemModel> _activeProducts = [];
 
@@ -35,8 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void loadData() async {
-    await fetchAndSetCategories();
-    await fetchAllProducts();
+    _categories = await HTTPAppRequest.fetchAndSetCategories();
 
     setState(() {
       _selectedCategory = _categories[0];
@@ -198,13 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-  Future<void> fetchAndSetCategories() async {
-    http.Response data = await http
-        .get(Uri.parse('https://fakestoreapi.com/products/categories'));
-    _categories = jsonDecode(data.body);
-  }
-
+  
   List<Widget> _buildItemWidgets(List<ItemModel> activeCategoryProducts,BuildContext context) {
     List<Widget> items = [];
     if(activeCategoryProducts.isEmpty) {
@@ -216,40 +207,5 @@ class _HomeScreenState extends State<HomeScreen> {
     return items;
   }
 
-  Future<void> fetchAllProducts() async {
 
-    http.Response response = await http.get(Uri.parse(
-        'https://fakestoreapi.com/products/category/${_categories[0]}'));
-    List<dynamic> objects = await jsonDecode(response.body);
-    // print(objects[0]['id']);
-    for (var obj in objects) {
-      _electornicsCategory.add(ItemModel.fromJson(obj));
-    }
-
-    response = await http.get(Uri.parse(
-        'https://fakestoreapi.com/products/category/${_categories[1]}'));
-    objects = await jsonDecode(response.body);
-    // print(objects[0]['id']);
-    for (var obj in objects) {
-      _jeweleryCategory.add(ItemModel.fromJson(obj));
-    }
-
-    response = await http.get(Uri.parse(
-        'https://fakestoreapi.com/products/category/${_categories[2]}'));
-    objects = await jsonDecode(response.body);
-    // print(objects[0]['id']);
-    for (var obj in objects) {
-      _mensCategory.add(ItemModel.fromJson(obj));
-    }
-
-    response = await http.get(Uri.parse(
-        'https://fakestoreapi.com/products/category/${_categories[3]}'));
-    objects = await jsonDecode(response.body);
-    // print(objects[0]['id']);
-    for (var obj in objects) {
-      _womensCategory.add(ItemModel.fromJson(obj));
-    }
-
-
-  }
 }
