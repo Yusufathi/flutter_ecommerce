@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:eccomernce/model/item_model.dart';
 import 'package:eccomernce/services/http_app_request.dart';
 import 'package:eccomernce/services/shared_pref.dart';
+import 'package:eccomernce/view/cart_screen.dart';
 import 'package:eccomernce/view/item_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -33,6 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void loadData() async {
+    setState(() {
+      _isLoading = false;
+    });
     _categories = await HTTPAppRequest.fetchAndSetCategories();
     _activeProducts =
         await HTTPAppRequest.fetchAllProductsForCategory(_categories[0]);
@@ -42,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void loadDifferentProducts(String category) async {
+  void _loadDifferentProducts(String category) async {
     setState(() {
       _isLoading = true;
     });
@@ -56,6 +60,23 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: TextButton(
+        onPressed:  (){
+          Navigator.of(context).pushNamed(CartScreen.id);
+        },
+        child: Container(
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+              color: Colors.deepPurple,
+              shape: BoxShape.circle
+          ),
+          child: Icon(
+            Icons.shopping_cart,
+            size: 40,
+            color: Colors.lightBlue,
+          ),
+        ),
+      ),
       body: _isLoading
           ? Center(
               child: LoadingIndicator(
@@ -83,7 +104,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Container _buildItemWidget(ItemModel item, BuildContext ctx) {
     return Container(
       height: 150,
-      color: Colors.white,
+
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: Colors.blueAccent)
+      ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
@@ -115,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ElevatedButton(
                           onPressed: () {
 
-                            SharedPref.saveCartProduct("1");
+                            SharedPref.saveCartProduct(item.id.toString());
                           }, child: Text("Add To Cart")),
                     ],
                   )
@@ -145,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   setState(() {
                     _selectedCategory = _categories[0];
                   });
-                  loadDifferentProducts(_categories[0]);
+                  _loadDifferentProducts(_categories[0]);
                 },
                 child: Text(
                   _categories[0],
@@ -166,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     _selectedCategory = _categories[1];
                     // _activeProducts = _jeweleryCategory;
                   });
-                  loadDifferentProducts(_categories[1]);
+                  _loadDifferentProducts(_categories[1]);
                 },
                 child: Text(
                   _categories[1],
@@ -187,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     _selectedCategory = _categories[2];
                     // _activeProducts = _mensCategory;
                   });
-                  loadDifferentProducts(_categories[2]);
+                  _loadDifferentProducts(_categories[2]);
                 },
                 child: Text(
                   _categories[2],
@@ -207,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   setState(() {
                     _selectedCategory = _categories[3];
                   });
-                  loadDifferentProducts(_categories[3]);
+                  _loadDifferentProducts(_categories[3]);
                 },
                 child: Text(
                   _categories[3],

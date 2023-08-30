@@ -8,6 +8,7 @@ class HTTPAppRequest{
   static const String _rootEndPoint ="https://fakestoreapi.com/";
   static const String _categoriesEndPoint  = "products/categories";
   static const String _fetchProductsAccordingToTheirCategoryEndPoint = "products/category/";
+  static const String _fetchSingleProductEndPoint = "products/";
 
   static Future<List<dynamic>> fetchAndSetCategories() async {
     http.Response data = await http.get(Uri.parse(_rootEndPoint+_categoriesEndPoint));
@@ -24,5 +25,12 @@ class HTTPAppRequest{
       items.add(ItemModel.fromJson(item));
     }
     return items;
+  }
+
+  static Future<ItemModel> fetchSingleProduct(String id) async {
+    http.Response data = await http.get(Uri.parse(_rootEndPoint+_fetchSingleProductEndPoint+id));
+    var decodedData = jsonDecode(data.body);
+    ItemModel item = ItemModel.fromJson(decodedData);
+    return item;
   }
 }
