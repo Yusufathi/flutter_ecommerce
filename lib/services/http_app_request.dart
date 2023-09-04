@@ -1,9 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-
 import '../model/item_model.dart';
-class HTTPAppRequest{
+class HTTPAppRequests{
 
   static const String _rootEndPoint ="https://fakestoreapi.com/";
   static const String _categoriesEndPoint  = "products/categories";

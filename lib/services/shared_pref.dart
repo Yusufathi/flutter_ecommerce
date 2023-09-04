@@ -5,7 +5,7 @@ class SharedPref {
 
   static Future<void> saveCartProduct(String productID) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> productsIds= prefs.getStringList(_cartProductsKey)??[];
+    List<String> productsIds = prefs.getStringList(_cartProductsKey) ?? [];
     productsIds.add(productID);
 
     await prefs.setStringList(_cartProductsKey, productsIds);
@@ -13,16 +13,15 @@ class SharedPref {
 
   static Future<List<String>> getCartProducts() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> productsIds= prefs.getStringList(_cartProductsKey)??[];
+    List<String> productsIds = prefs.getStringList(_cartProductsKey) ?? [];
     return productsIds;
   }
 
-  static void removeFromCart(String id ) async{
+  static Future<void> removeFromCart(String id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> productsIds= prefs.getStringList(_cartProductsKey)??[];
+    List<String> productsIds = prefs.getStringList(_cartProductsKey) ?? [];
     productsIds.remove(id);
     await prefs.setStringList(_cartProductsKey, productsIds);
+    return;
   }
-
-
 }

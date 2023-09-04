@@ -1,9 +1,10 @@
 import 'package:eccomernce/model/item_model.dart';
-import 'package:eccomernce/view/home_screen.dart';
+import 'package:eccomernce/providers/item_provider.dart';
+import 'package:eccomernce/screens/home_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import '../services/http_app_request.dart';
-import '../services/shared_pref.dart';
+import 'package:provider/provider.dart';
 
 class CartScreen extends StatefulWidget {
   static const String id = "cart_screen";
@@ -15,30 +16,13 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  List<ItemModel> items = [];
   late bool _isLoading;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _isLoading = true;
-    _loadData();
-  }
-
-  void _loadData() async {
-    setState(() {
-      _isLoading = true;
-    });
-    List<String> ids = await SharedPref.getCartProducts();
-    items.clear();
-    for (String id in ids) {
-      ItemModel item = await HTTPAppRequest.fetchSingleProduct(id);
-      items.add(item);
-    }
-    setState(() {
-      _isLoading = false;
-    });
+    _isLoading = false;
   }
 
   @override
@@ -46,13 +30,19 @@ class _CartScreenState extends State<CartScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: TextButton(
-          onPressed: (){
+          onPressed: () {
             Navigator.of(context).pushNamed(HomeScreen.id);
           },
-          child: Icon(
-            Icons.arrow_back
-          ),
+          child: Icon(Icons.arrow_back),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "The Total is: ${context.read<CartProvider>().getCartTotal()}\$",
+            ),
+          ),
+        ],
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Cart Screen'),
       ),
@@ -61,7 +51,10 @@ class _CartScreenState extends State<CartScreen> {
           : Container(
               child: SingleChildScrollView(
                 child: Column(
-                  children: _buildItemWidgets(items, context),
+                  children: _buildItemWidgets(
+                    context.watch<CartProvider>().cartItems,
+                    context,
+                  ),
                 ),
               ),
             ),
@@ -105,8 +98,10 @@ class _CartScreenState extends State<CartScreen> {
                     children: [
                       ElevatedButton(
                           onPressed: () async {
-                             SharedPref.removeFromCart(item.id.toString());
-                            _loadData();
+                            context
+                                .read<CartProvider>()
+                                .removeItem(item.id.toString());
+                            // _loadData();
                           },
                           child: Text("Remove")),
                       SizedBox(

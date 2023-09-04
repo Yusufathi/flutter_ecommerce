@@ -1,15 +1,21 @@
-import 'package:eccomernce/view/home_screen.dart';
-import 'package:flutter/material.dart';
 
-class AuthenticationScreen extends StatefulWidget {
+import 'package:eccomernce/screens/home_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+class LoginScreen extends StatefulWidget {
   static const String id = "authentication_screen";
-  const AuthenticationScreen({super.key});
+
+  const LoginScreen({super.key});
 
   @override
-  State<AuthenticationScreen> createState() => _AuthenticationScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _AuthenticationScreenState extends State<AuthenticationScreen> {
+class _LoginScreenState extends State<LoginScreen> {
+  String _password = "";
+  String _email = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +41,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
             SizedBox(
               height: 20,
             ),
-            const TextField(
+            TextField(
               decoration: InputDecoration(
                 hintText: "Email",
                 border: OutlineInputBorder(
@@ -51,11 +57,14 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                   color: Colors.red,
                 )),
               ),
+              onChanged: (String newEmail) {
+                _email = newEmail;
+              },
             ),
             SizedBox(
               height: 20,
             ),
-            const TextField(
+            TextField(
               obscureText: true,
               decoration: InputDecoration(
                 hintText: "Password",
@@ -72,12 +81,15 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                   color: Colors.red,
                 )),
               ),
+              onChanged: (String newPassword) {
+                _password = newPassword;
+              },
             ),
             SizedBox(
               height: 20,
             ),
             Row(
-              children: [
+              children: const [
                 Text('Don\'t Have an account? '),
                 Text(
                   'Register Now!',
@@ -88,13 +100,46 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
             SizedBox(
               height: 20,
             ),
-            ElevatedButton(onPressed: () {
-              Navigator.of(context).pushNamed(HomeScreen.id);
-
-            }, child: const Text('Login'))
+            ElevatedButton(
+                onPressed: () {
+                  if (_password == "admin" && _email == "admin") {
+                    Navigator.of(context).pushNamed(HomeScreen.id);
+                  } else {
+                    showAlertDialog(context,"The password or the email is incorrect");
+                  }
+                },
+                child: const Text('Login'))
           ],
         ),
       ),
+    );
+  }
+
+  showAlertDialog(BuildContext context,String msg) {
+
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Error"),
+      content: Text(msg),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }
