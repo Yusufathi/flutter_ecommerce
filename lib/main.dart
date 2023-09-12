@@ -3,6 +3,7 @@ import 'package:eccomernce/screens/auth_screen.dart';
 import 'package:eccomernce/screens/cart_screen.dart';
 import 'package:eccomernce/screens/home_screen.dart';
 import 'package:eccomernce/screens/item_screen.dart';
+import 'package:eccomernce/screens/contact_us_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         CartScreen.id: (_) => CartScreen(),
         ItemScreen.id: (_) => ItemScreen(),
         HomeScreen.id: (_) => HomeScreen(),
+        ContactUsScreen.id: (_) => ContactUsScreen(),
       },
     );
   }
